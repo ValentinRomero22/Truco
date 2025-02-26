@@ -4,7 +4,6 @@ import { cards } from '../data/cards.js'
 const giveCards = () => {
     const arrayPlayerCards = []
     const arrayPcCards = []
-    let dataPcFlower, dataPlayerFlower, dataPcPoints, dataPlayerPoints
 
     for (let i = cards.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -19,6 +18,21 @@ const giveCards = () => {
             : arrayPcCards.push(cardsToGive[i])
     }
 
+
+
+    return {
+        arrayPlayerCards,
+        arrayPcCards
+    }
+}
+
+const checkPoints = (arrayPlayerCards, arrayPcCards) => {
+    console.log(arrayPlayerCards)
+    console.log('leyó el array')
+
+    let dataPcFlower, dataPlayerFlower
+    let dataPcFlowerPoints = 0, dataPlayerFlowerPoints = 0, dataPcPoints = 0, dataPlayerPoints = 0
+
     arrayPlayerCards[0].suit === arrayPlayerCards[1].suit
         ? arrayPlayerCards[1].suit === arrayPlayerCards[2].suit
             ? dataPlayerFlower = true
@@ -31,14 +45,40 @@ const giveCards = () => {
             : dataPcFlower = false
         : dataPcFlower = false
 
-    return {
-        arrayPlayerCards,
-        arrayPcCards,
-        dataPcFlower,
-        dataPlayerFlower,
-        dataPcPoints,
-        dataPlayerPoints
+    if (dataPlayerFlower) {
+        for (let i = 0; i < arrayPlayerCards.length; i++) {
+            arrayPlayerCards[i].number > 7
+                ? dataPlayerFlowerPoints = dataPlayerFlowerPoints
+                : dataPlayerFlowerPoints = dataPlayerFlowerPoints + arrayPlayerCards[i].number
+
+            console.log(`${dataPlayerFlowerPoints} índice ${i}`)
+        }
+
+        if (dataPlayerFlowerPoints != 0) dataPlayerFlowerPoints = dataPlayerFlowerPoints + 20
+
+        console.log(dataPlayerFlowerPoints)
     }
+
+    if (dataPcFlower) {
+        for (let i = 0; i < arrayPcCards.length; i++) {
+            arrayPcCards[i].number > 7
+                ? dataPcFlowerPoints = dataPcFlowerPoints
+                : dataPcFlowerPoints = dataPcFlowerPoints + arrayPcCards[i].number
+        }
+
+        if (dataPcFlowerPoints != 0) dataPcFlowerPoints = dataPcFlowerPoints + 20
+
+        console.log(dataPcFlowerPoints)
+    }
+
+        return {
+            dataPlayerFlower,
+            dataPcFlower,
+            dataPcFlowerPoints,
+            dataPlayerFlowerPoints,
+            dataPcPoints,
+            dataPlayerPoints
+        }
 }
 
-export { giveCards }
+export { giveCards, checkPoints }

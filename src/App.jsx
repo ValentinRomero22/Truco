@@ -3,7 +3,7 @@ import './index.css'
 
 import backCards from './assets/cardImages/tapa.png'
 
-import { giveCards } from '../helpers/dealCards.js'
+import { giveCards, checkPoints } from '../helpers/dealCards.js'
 
 const TURNS = { PC: 'PC', PLAYER: 'PLAYER' }
 
@@ -28,26 +28,27 @@ function App() {
     useEffect(() => {
         const {
             arrayPlayerCards,
-            arrayPcCards,
-            dataPcFlower,
-            dataPlayerFlower,
-            dataPcPoints,
-            dataPlayerPoints
+            arrayPcCards
         } = giveCards()
 
         setPlayerCards(arrayPlayerCards)
         setPcCards(arrayPcCards)
 
-        console.log(`Flor PC: ${dataPcFlower} | Flor player: ${dataPlayerFlower}`)
+        const {
+            dataPlayerFlower,
+            dataPcFlower,
+            dataPcFlowerPoints,
+            dataPlayerFlowerPoints,
+            dataPcPoints,
+            dataPlayerPoints
+        } = checkPoints(arrayPlayerCards, arrayPcCards)
+
         setPlayerFlower(dataPlayerFlower)
         setPcFlower(dataPcFlower)
+
+        console.log(`Flor PC: ${dataPcFlower} | Points: ${dataPcFlowerPoints}`)
+        console.log(`Flor player: ${dataPlayerFlower} | Points: ${dataPlayerFlowerPoints}`)
     }, [])
-
-    /* useEffect(() => {
-        const { pcFlower } = checkPoints(pcCards, playerCards)
-
-        console.log(pcFlower)
-    }, []) */
 
     // estado para saber si ya se cantó o no --> true = se puede tantear
     const [points, setPoints] = useState(true)
