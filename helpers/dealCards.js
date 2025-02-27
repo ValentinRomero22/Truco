@@ -1,6 +1,6 @@
 import { cards } from '../data/cards.js'
 
-// barajar y repartir las cartas
+// FUNCIÓN BARAJAR Y REPARTIR LAS CARTAS
 const giveCards = () => {
     const arrayPlayerCards = []
     const arrayPcCards = []
@@ -24,20 +24,12 @@ const giveCards = () => {
     }
 }
 
+// FUNCIÓN PARA VERIFICAR FLOR, PUNTOS DE LA FLOR Y PUNTOS DEL ENVIDO
 const checkPoints = (arrayPlayerCards, arrayPcCards) => {
-    //console.log(arrayPlayerCards)
-    //console.log('leyó el array')
-
     let dataPcFlower = false, dataPlayerFlower = false
     let dataPcFlowerPoints = 0, dataPlayerFlowerPoints = 0, dataPcPoints = 0, dataPlayerPoints = 0
 
-    // PARA SABER SI EL JUGADOR TIENE FLOR
-    /* arrayPlayerCards[0].suit === arrayPlayerCards[1].suit
-        ? arrayPlayerCards[1].suit === arrayPlayerCards[2].suit
-            ? dataPlayerFlower = true
-            : dataPlayerFlower = false
-        : dataPlayerFlower = false */
-
+    // LÓGICA PARA EL JUGADOR
     if (arrayPlayerCards[0].suit === arrayPlayerCards[1].suit) {
         // ACÁ NO SÉ SI HAY FLOR PERO YA PUEDO CONTAR LOS PUNTOS PARA EL ENVIDO...
         dataPlayerPoints = 20
@@ -53,8 +45,15 @@ const checkPoints = (arrayPlayerCards, arrayPcCards) => {
             : dataPlayerPoints = dataPlayerPoints
 
         if (arrayPlayerCards[0].suit === arrayPlayerCards[2].suit) {
-            // SI TAMBIÉN ES TRUE HAY FLOR
+            // SI TAMBIÉN ES TRUE HAY FLOR, CAMBIO EL VALOR DE LA BANDERA Y CUENTO LOS PUNTOS
             dataPlayerFlower = true
+            dataPlayerFlowerPoints = 20
+
+            for (let i = 0; i < arrayPlayerCards.length; i++) {
+                arrayPlayerCards[i].number > 7
+                    ? dataPlayerFlowerPoints = dataPlayerFlowerPoints
+                    : dataPlayerFlowerPoints = dataPlayerFlowerPoints + arrayPlayerCards[i].number
+            }
 
             // ACÁ TENGO QUE VER CON QUÉ CARTAS ME QUEDO PARA LOS PUNTOS DEL ENVIDO
             // SI LA CARTA 2 ES BLANCA TENGO QUE VER SI ES MAYOR A ALGUNA QUE LAS ANTERIORES
@@ -110,60 +109,85 @@ const checkPoints = (arrayPlayerCards, arrayPcCards) => {
         }
     }
 
-    /* if (dataPlayerFlower) {
-        // SI TIENE FLOR CUENTO LOS PUNTOS DE LA FLOR, O DEL ENVIDO EN CASO DE QUE NO LA CANTE
-        for (let i = 0; i < arrayPlayerCards.length; i++) {
-            arrayPlayerCards[i].number > 7
-                ? dataPlayerFlowerPoints = dataPlayerFlowerPoints
-                : dataPlayerFlowerPoints = dataPlayerFlowerPoints + arrayPlayerCards[i].number
+    // LÓGICA PARA LA PC
+    if (arrayPcCards[0].suit === arrayPcCards[1].suit) {
+        // ACÁ NO SÉ SI HAY FLOR PERO YA PUEDO CONTAR LOS PUNTOS PARA EL ENVIDO...
+        dataPcPoints = 20
 
-            //console.log(`${dataPlayerFlowerPoints} índice ${i}`)
+        // SI ES BLANCA SUMO LA CARTA, SI NO DEJO EL VALOR COMO ESTABA
+        arrayPcCards[0].number < 10
+            ? dataPcPoints = dataPcPoints + arrayPcCards[0].number
+            : dataPcPoints = dataPcPoints
+
+        // SI ES BLANCA SUMO LA CARTA, SI NO DEJO EL VALOR COMO ESTABA
+        arrayPcCards[1].number < 10
+            ? dataPcPoints = dataPcPoints + arrayPcCards[1].number
+            : dataPcPoints = dataPcPoints
+
+        if (arrayPcCards[0].suit === arrayPcCards[2].suit) {
+            // SI TAMBIÉN ES TRUE HAY FLOR, CAMBIO EL VALOR DE LA BANDERA Y CUENTO LOS PUNTOS
+            dataPlayerFlower = true
+            dataPlayerFlowerPoints = 20
+
+            for (let i = 0; i < arrayPcCards.length; i++) {
+                arrayPcCards[i].number > 7
+                    ? dataPlayerFlowerPoints = dataPlayerFlowerPoints
+                    : dataPlayerFlowerPoints = dataPlayerFlowerPoints + arrayPcCards[i].number
+            }
+
+            // ACÁ TENGO QUE VER CON QUÉ CARTAS ME QUEDO PARA LOS PUNTOS DEL ENVIDO
+            // SI LA CARTA 2 ES BLANCA TENGO QUE VER SI ES MAYOR A ALGUNA QUE LAS ANTERIORES
+            if (arrayPcCards[2].number < 10) {
+                if (arrayPcCards[0].number > 7 || arrayPcCards[1].number > 7) {
+                    // SI ALGUNA DE LAS DOS ES UNA NEGRA, SUMO EL PUNTO DE LA TERCERA CARTA
+                    dataPcPoints = dataPcPoints + arrayPcCards[2].number
+                } else {
+                    // SI NINGUNA DE LAS DOS ES UNA NEGRA
+                    // TENGO QUE VER CUÁL DE LAS TRES BLANCAS ES MÁS GRANDE
+                    // YA TENGO CONTADAS LAS CARTAS 0 Y 1 POR LO QUE COMPARO CON LA CARTA 2
+                    if (arrayPcCards[2].number > arrayPcCards[0].number) {
+                        dataPcPoints = dataPcPoints + arrayPcCards[2].number
+
+                        if (arrayPcCards[1].number > arrayPcCards[0].number) {
+                            dataPcPoints = dataPcPoints - arrayPcCards[0].number
+                        } else {
+                            dataPcPoints = dataPcPoints - arrayPcCards[1].number
+                        }
+                    }
+                }
+            }
         }
+    } else if (arrayPcCards[0].suit === arrayPcCards[2].suit) {
+        // ACÁ YA SÉ QUE NO HAY FLOR, NO LO SÉ DE ANTES PORQUE NO ENTRÉ EN EL IF ANTERIOR
+        // SI LLEGO HASTA ACÁ TENGO QUE SUMAR LOS PUNTOS DE LAS CARTAS 0 Y 2
+        dataPcPoints = 20
 
-        // SI LA FLOR ES 10, 11 Y 12 LOS PUNTOS DE LA FLOR Y EL ENVIDO SON 20
-        //if (dataPlayerFlowerPoints != 0) dataPlayerFlowerPoints = dataPlayerFlowerPoints + 20
-        dataPlayerFlowerPoints = dataPlayerFlowerPoints + 20
+        if (arrayPcCards[0].number < 10)
+            dataPcPoints = dataPcPoints + arrayPcCards[0].number
 
-        //console.log(dataPlayerFlowerPoints)
+        if (arrayPcCards[2].number < 10)
+            dataPcPoints = dataPcPoints + arrayPcCards[2].number
+    } else if (arrayPcCards[1].suit === arrayPcCards[2].suit) {
+        // SI LLEGO HASTA ACÁ TENGO QUE SUMAR LOS PUNTOS DE LAS CARTAS 1 Y 2
+        dataPcPoints = 20
+
+        if (arrayPcCards[1].number < 10)
+            dataPcPoints = dataPcPoints + arrayPcCards[1].number
+
+        if (arrayPcCards[2].number < 10)
+            dataPcPoints = dataPcPoints + arrayPcCards[2].number
     } else {
-        // SI NO TIENE FLOR, CUENTO LOS PUNTOS DEL ENVIDO
-    } */
-
-    // PARA SABER SI LA PC TIENE FLOR
-    arrayPcCards[0].suit === arrayPcCards[1].suit
-        ? arrayPcCards[1].suit === arrayPcCards[2].suit
-            ? dataPcFlower = true
-            : dataPcFlower = false
-        : dataPcFlower = false
-
-    if (dataPcFlower) {
+        // SI LLEGO HASTA ACÁ ES QUE NO HAY CARTAS DEL MISMO PALO
+        // TENGO QUE VER SI TODAS SON NEGRAS O CUAL ES LA MÁS ALTA DE LAS BLANCAS
         for (let i = 0; i < arrayPcCards.length; i++) {
-            arrayPcCards[i].number > 7
-                ? dataPcFlowerPoints = dataPcFlowerPoints
-                : dataPcFlowerPoints = dataPcFlowerPoints + arrayPcCards[i].number
+            if (i == 0) {
+                if (arrayPcCards[i].number < 10) dataPcPoints = arrayPcCards[i].number
+            } else {
+                if (arrayPcCards[i].number < 10 && arrayPcCards[i].number > dataPcPoints)
+                    dataPcPoints = arrayPcCards[i].number
+            }
         }
-
-        if (dataPcFlowerPoints != 0) dataPcFlowerPoints = dataPcFlowerPoints + 20
-
-        //console.log(dataPcFlowerPoints)
     }
-
-    // primero tomo las dos cartas del mismo palo si es que las hay
-    // luego tomo los puntos de esas cartas
-    // en caso de que no haya cartas del mismo palo tomo la de mayor valor
-
-    /* for (let i = 0; i < arrayPlayerCards.length - 1; i++) {
-        if ()
-    } */
-
-    /* arrayPlayerCards[0].suit === arrayPlayerCards[1].suit
-        ? dataPlayerPoints = 20
-        : arrayPlayerCards[0].suit === arrayPlayerCards[2].suit
-            ? dataPlayerPoints = 20
-            : arrayPlayerCards[1].suit === arrayPlayerCards[2].suit
-                ? dataPlayerPoints = 20
-                : dataPlayerPoints = 0 */
-
 
     return {
         dataPlayerFlower,
@@ -172,8 +196,6 @@ const checkPoints = (arrayPlayerCards, arrayPcCards) => {
         dataPlayerFlowerPoints,
         dataPlayerPoints,
         dataPcPoints
-        /* dataPcTotalPoints,
-        dataPlayerTotalPoints */
     }
 }
 

@@ -25,6 +25,14 @@ function App() {
     const [playerFlower, setPlayerFlower] = useState(false)
     const [pcFlower, setPcFlower] = useState(false)
 
+    // estados para los puntos de las flores
+    const [playerFlowerPoints, setPlayerFlowerPoints] = useState(0)
+    const [pcFlowerPoints, setPcFlowerPoints] = useState(0)
+
+    // estados para los puntos de los jugadores (envidos)
+    const [playerPoints, setPlayerPoints] = useState(0)
+    const [pcPoints, setPcPoints] = useState(0)
+
     useEffect(() => {
         const {
             arrayPlayerCards,
@@ -46,8 +54,10 @@ function App() {
         setPlayerFlower(dataPlayerFlower)
         setPcFlower(dataPcFlower)
 
+
         console.log(`Flor PC: ${dataPcFlower} | Points: ${dataPcFlowerPoints}`)
         console.log(`Flor player: ${dataPlayerFlower} | Points: ${dataPlayerFlowerPoints}`)
+        console.log(`Puntos PC: ${dataPcPoints}`)
         console.log(`Puntos player: ${dataPlayerPoints}`)
     }, [])
 
