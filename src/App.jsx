@@ -48,6 +48,7 @@ function App() {
 
         console.log(`Flor PC: ${dataPcFlower} | Points: ${dataPcFlowerPoints}`)
         console.log(`Flor player: ${dataPlayerFlower} | Points: ${dataPlayerFlowerPoints}`)
+        console.log(`Puntos player: ${dataPlayerPoints}`)
     }, [])
 
     // estado para saber si ya se cantó o no --> true = se puede tantear
@@ -92,7 +93,7 @@ function App() {
                             <Cell
                                 key={index}
                                 updateCards={updateCards}>
-                                <img src={backCards} alt='Cartas PC' />
+                                <img src={cell.image} alt='Cartas PC' />
                             </Cell>
                         )
                     })
