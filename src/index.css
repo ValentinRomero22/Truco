@@ -44,7 +44,7 @@
     margin-top: 25px;
 }
 
-.cell {
+.card {
     width: 100px;
     height: 150px;
     display: grid;
@@ -53,12 +53,12 @@
     font-size: 20px;
 }
 
-.cell img {
+.card img {
     max-width: 100%;
     transition: transform 0.5s ease;
 }
 
-.cell:hover img{
+.card:hover img{
     transform: scale(1.1);
 }
 
