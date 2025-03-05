@@ -1,11 +1,10 @@
 import './index.css'
 
-import Table from './components/Table'
+import Game from './components/Game'
 
 function App() {
-    // estado de las manos de los jugadores
     return (
-        <Table></Table>
+        <Game></Game>
     )
 }
 

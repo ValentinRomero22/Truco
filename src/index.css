@@ -17,39 +17,41 @@
     -webkit-text-size-adjust: 100%;
 }
 
-.main {
+.table {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.table {
+.board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.pcCards {
+.cardsBox {
+    min-height: 150px;
+    margin: 25px 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    margin-bottom: 25px;
 }
 
-.playerCards {
+/* .playerCards {
+    min-height: 150px;
+    margin: 25px 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    margin-top: 25px;
-}
+} */
 
 .card {
     width: 100px;
     height: 150px;
     display: grid;
     place-items: center;
-    cursor: pointer;
+    /* cursor: pointer; */
     font-size: 20px;
 }
 
@@ -58,12 +60,12 @@
     transition: transform 0.5s ease;
 }
 
-.card:hover img{
+.playerCards .card:hover img {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 .buttons {
-    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 10px;

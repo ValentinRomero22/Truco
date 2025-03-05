@@ -1,6 +1,11 @@
-const Card = ({ children, index, updateTable }) => {
+const Card = ({ children, card, index, updateTable }) => {
+    const handleClick = () => {
+        updateTable(card, index)
+    }
+
     return (
-        <div className='card'>
+        <div className='card'
+            onClick={handleClick} >
             {children}
         </div>
     )

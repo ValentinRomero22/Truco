@@ -1,21 +1,30 @@
 import Card from "./Card"
+import CardBoard from "./CardBoard"
 
-const Board = ({ board, updateTable }) => {
+const Board = ({ board }) => {
     return (
-        <section className='table'>
+        <section className='board'>
             {
-                board.map((card, index) => {
-                    return (
-                        <Card
-                            key={index}
-                            index={index}
-                            updateTable={updateTable}>
-                            {card}
-                        </Card>
-                    )
-                })
+                board.map((row, rowIndex) =>
+                    row.map((card, columnIndex) => {
+                        if (card == null) {
+                            return (
+                                <CardBoard
+                                    key={`${rowIndex} ${columnIndex}`}>
+                                </CardBoard>
+                            )
+                        } else {
+                            return (
+                                <CardBoard
+                                    key={`${rowIndex} ${columnIndex}`}
+                                    cardImage={card.image}>
+                                </CardBoard>
+                            )
+                        }
+                    })
+                )
             }
-        </section>
+        </section >
     )
 }
 

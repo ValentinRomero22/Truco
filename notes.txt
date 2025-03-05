@@ -1,0 +1,7 @@
+Se necesita mantener durante todo el juego 
+y a medida que van pasando las manos:
+-- putuación de los jugadores
+-- seguimiento de cuál jugador es mano, en cada una de las manos
+
+debe de estar por fuera de la tabla, dado que esta se tiene que renderizar
+cuando la mano termina

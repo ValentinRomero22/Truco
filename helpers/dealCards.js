@@ -10,7 +10,7 @@ const giveCards = () => {
         [cards[i], cards[j]] = [cards[j], cards[i]];
     }
 
-    const cardsToGive = cards.splice(0, 6)
+    const cardsToGive = cards.slice(0, 6)
 
     for (let i = 0; i < cardsToGive.length; i++) {
         i % 2 == 0
@@ -25,7 +25,7 @@ const giveCards = () => {
 }
 
 // FUNCIÓN PARA VERIFICAR FLOR, PUNTOS DE LA FLOR Y PUNTOS DEL ENVIDO
-const checkPoints = (arrayPlayerCards, arrayPcCards) => {
+const getPoints = (arrayPlayerCards, arrayPcCards) => {
     let dataPcFlower = false, dataPlayerFlower = false
     let dataPcFlowerPoints = 0, dataPlayerFlowerPoints = 0, dataPcPoints = 0, dataPlayerPoints = 0
 
@@ -126,13 +126,13 @@ const checkPoints = (arrayPlayerCards, arrayPcCards) => {
 
         if (arrayPcCards[0].suit === arrayPcCards[2].suit) {
             // SI TAMBIÉN ES TRUE HAY FLOR, CAMBIO EL VALOR DE LA BANDERA Y CUENTO LOS PUNTOS
-            dataPlayerFlower = true
-            dataPlayerFlowerPoints = 20
+            dataPcFlower = true
+            dataPcFlowerPoints = 20
 
             for (let i = 0; i < arrayPcCards.length; i++) {
                 arrayPcCards[i].number > 7
-                    ? dataPlayerFlowerPoints = dataPlayerFlowerPoints
-                    : dataPlayerFlowerPoints = dataPlayerFlowerPoints + arrayPcCards[i].number
+                    ? dataPcFlowerPoints = dataPcFlowerPoints
+                    : dataPcFlowerPoints = dataPcFlowerPoints + arrayPcCards[i].number
             }
 
             // ACÁ TENGO QUE VER CON QUÉ CARTAS ME QUEDO PARA LOS PUNTOS DEL ENVIDO
@@ -199,4 +199,9 @@ const checkPoints = (arrayPlayerCards, arrayPcCards) => {
     }
 }
 
-export { giveCards, checkPoints }
+const getTurn = () => {
+    let randomTurn = Math.floor(Math.random() * 2)
+    return randomTurn
+}
+
+export { giveCards, getPoints, getTurn }
