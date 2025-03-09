@@ -5,3 +5,17 @@ y a medida que van pasando las manos:
 
 debe de estar por fuera de la tabla, dado que esta se tiene que renderizar
 cuando la mano termina
+
+el modal que se muestra al usuario puede ser por puntos o por truco
+
+* por puntos:
+    - envido | quiero - no quiero - envido - real envido - falta envido
+    - real envido | quiero - no quiero - real envido - falta envido
+    - falta envido | quiero - no quiero
+    - flor | ok - flor - contraflor - contra flor al resto
+
+- por truco: 
+    - truco | quiero - no quiero - re truco
+    - re truco | quiero - no quiero - vale cuatro
+    - vale cuatro | quiero - no quiero
+

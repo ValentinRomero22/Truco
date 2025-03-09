@@ -7,8 +7,15 @@ import { checkTrick } from '../../helpers/checkHand'
 
 import Board from './Board'
 import Card from './Card'
+import Modal from './Modal'
 
-const Table = ({ playerHand, setPcGamePoints, setPlayerGamePoints, setWinner }) => {
+const Table = ({
+    playerHand,
+    setPcGamePoints,
+    setPlayerGamePoints,
+    setWinner,
+    pcGamePoints,
+    playerGamePoints }) => {
     // estado para manejar las manos que se van jugando (NO EL JUGADOR QUE ES MANO)
     const [hand, setHand] = useState(0)
 
@@ -65,21 +72,32 @@ const Table = ({ playerHand, setPcGamePoints, setPlayerGamePoints, setWinner }) 
         setPlayerPoints(dataPlayerPoints)
         setPcPoints(dataPcPoints)
 
-        console.log(`Flor PC: ${dataPcFlower} | Points: ${dataPcFlowerPoints}`)
+        /* console.log(`Flor PC: ${dataPcFlower} | Points: ${dataPcFlowerPoints}`)
         console.log(`Flor player: ${dataPlayerFlower} | Points: ${dataPlayerFlowerPoints}`)
         console.log(`Puntos PC: ${dataPcPoints}`)
-        console.log(`Puntos player: ${dataPlayerPoints}`)
+        console.log(`Puntos player: ${dataPlayerPoints}`) */
 
     }, [playerHand, hand])
 
     useEffect(() => {
         console.log(turn)
-        if (pcFlower === true && turn === 0) {
-            setTimeout(() => {
-                alert('flor')
-            }, 500)
+        if (pcFlower === true) {
+            setPcGamePoints(pcGamePoints + 3)
+
+            if (turn === 0) {
+                setTimeout(() => {
+                    callPcModal('FLOR')
+                }, 100)
+            }
         }
     }, [pcFlower])
+
+    const callPcModal = (move) => {
+        console.log('se llamó al modal')
+        return (
+            <Modal move={move}></Modal>
+        )
+    }
 
     // estado para saber si ya se cantó o no --> false = se puede tantear
     const [points, setPoints] = useState(true)
@@ -123,6 +141,11 @@ const Table = ({ playerHand, setPcGamePoints, setPlayerGamePoints, setWinner }) 
         }
 
         setBoard(newBoard)
+    }
+
+    const addFlowerPlayerPoints = () => {
+        setPlayerGamePoints(playerGamePoints + 3)
+        console.log(playerGamePoints)
     }
 
     /* const playCard = (card, player) => {
@@ -193,7 +216,9 @@ const Table = ({ playerHand, setPcGamePoints, setPlayerGamePoints, setWinner }) 
                     <button disabled>
                         VALE CUATRO
                     </button>
-                    <button disabled={!playerFlower}>
+                    <button
+                        /* disabled={!playerFlower} */
+                        onClick={addFlowerPlayerPoints}>
                         FLOR
                     </button>
                     <button disabled>

@@ -1,4 +1,3 @@
-import Card from "./Card"
 import CardBoard from "./CardBoard"
 
 const Board = ({ board }) => {

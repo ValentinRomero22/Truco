@@ -19,12 +19,20 @@ const Game = () => {
     }, [winner])
 
     return (
-        <Table
-            playerHand={playerHand}
-            setPcGamePoints={setPcGamePoints}
-            setPlayerGamePoints={setPlayerGamePoints}
-            setWinner={setWinner}>
-        </Table>
+        <>
+            <Table
+                playerHand={playerHand}
+                setPcGamePoints={setPcGamePoints}
+                setPlayerGamePoints={setPlayerGamePoints}
+                setWinner={setWinner}
+                pcGamePoints={pcGamePoints}
+                playerGamePoints={playerGamePoints}>
+            </Table>
+            <div>
+                <span>Puntos PC: {pcGamePoints}</span>
+                <span>Puntos jugador: {playerGamePoints}</span>
+            </div>
+        </>
     )
 }
 
