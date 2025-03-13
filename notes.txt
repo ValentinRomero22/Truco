@@ -19,3 +19,12 @@ el modal que se muestra al usuario puede ser por puntos o por truco
     - re truco | quiero - no quiero - vale cuatro
     - vale cuatro | quiero - no quiero
 
+para que el modal siempre sea el mismo debe recibir por parámetro
+* lo que se está cantando y en relación a eso los botones disponibles
+    - para el tema de los botones hay que ver si el jugador tiene flor para poder responder
+* qué jugador es el que está cantando, y en relación a eso mostrar las respuestas disponibles
+    - tener en cuenta que el modal aparecerá cuando el player cante truco por ejemplo
+    y en función de la respuesta ofrecer los botones al player
+
+
+

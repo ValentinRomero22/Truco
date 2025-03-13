@@ -79,18 +79,30 @@ const Table = ({
 
     }, [playerHand, hand])
 
+    // estado para manejar si mostrar o no el modal de flor de la pc
+    const [isPcFlowerModalVisibe, setIsPcFlowerModalVisible] = useState(false)
+    
     useEffect(() => {
         console.log(turn)
         if (pcFlower === true) {
             setPcGamePoints(pcGamePoints + 3)
 
+            setTimeout(() => {
+                setIsPcFlowerModalVisible(true)
+            }, 100)
             if (turn === 0) {
-                setTimeout(() => {
-                    callPcModal('FLOR')
-                }, 100)
             }
         }
     }, [pcFlower])
+
+
+    /* if (pcFlower) {
+        return (
+            <Modal
+                move={'FLOR'}>
+            </Modal>
+        )
+    } */
 
     const callPcModal = (move) => {
         console.log('se llamó al modal')
@@ -148,21 +160,10 @@ const Table = ({
         console.log(playerGamePoints)
     }
 
-    /* const playCard = (card, player) => {
-        if (turn != player) return // esto bloquea al jugador para que no pueda jugar una carta
-
-        player === 1
-            ? setPlayerOneCards(playerOneCards.filter((c) => c !== card))
-            : setPlayerTwoCards(playerTwoCards.filter((c) => c !== card))
-
-        setTable([...table, { card, player }])
-        setCurrentCard(card)
-        setTurn(player === 1 ? 2 : 1)
-    } */
-
     if (playerHand !== null) {
         return (
             <main className='table'>
+                {isPcFlowerModalVisibe && <Modal move={'FLOR'} playerFlower={playerFlower}></Modal>}
                 <h1>TRUCO!</h1>
                 <section className='cardsBox'>
                     {
@@ -198,34 +199,38 @@ const Table = ({
                     }
                 </section>
                 <section className='buttons'>
-                    <button>
+                    <button
+                        className='button'>
                         ENVIDO
                     </button>
-                    <button disabled>
+                    <button 
+                        disabled
+                        className='button'>
                         REAL ENVIDO
                     </button>
-                    <button disabled>
+                    <button 
+                        disabled
+                        className='button'>
                         FALTA ENVIDO
                     </button>
-                    <button disabled>
+                    <button 
+                        className='button'>
                         TRUCO
                     </button>
-                    <button disabled>
+                    <button
+                        disabled
+                        className='button'>
                         RE TRUCO
                     </button>
-                    <button disabled>
+                    <button 
+                        disabled
+                        className='button'>
                         VALE CUATRO
                     </button>
                     <button
                         /* disabled={!playerFlower} */
                         onClick={addFlowerPlayerPoints}>
                         FLOR
-                    </button>
-                    <button disabled>
-                        QUIERO
-                    </button>
-                    <button disabled>
-                        NO QUIERO
                     </button>
                     <button
                         onClick={(() => {
@@ -253,5 +258,17 @@ const Table = ({
         )
     }
 }
+
+/* const playCard = (card, player) => {
+    if (turn != player) return // esto bloquea al jugador para que no pueda jugar una carta
+
+    player === 1
+        ? setPlayerOneCards(playerOneCards.filter((c) => c !== card))
+        : setPlayerTwoCards(playerTwoCards.filter((c) => c !== card))
+
+    setTable([...table, { card, player }])
+    setCurrentCard(card)
+    setTurn(player === 1 ? 2 : 1)
+} */
 
 export default Table
