@@ -8,25 +8,36 @@ const Game = () => {
     const [pcGamePoints, setPcGamePoints] = useState(0)
     const [playerGamePoints, setPlayerGamePoints] = useState(0)
 
+    const [firtsHand, setFirstHand] = useState(true)
+
     const [playerHand, setPlayerHand] = useState(null)
 
     const [winner, setWinner] = useState(null)
 
     useEffect(() => {
-        const hand = getTurn()
-        console.log(`Game devuelve ${hand}`)
-        setPlayerHand(hand)
+        if (firtsHand) {
+            const hand = getTurn()
+            setPlayerHand(hand)
+
+            setFirstHand(false)
+        } else {
+            playerHand === 0
+                ? setPlayerHand(1)
+                : setPlayerHand(0)
+        }
     }, [winner])
 
     return (
         <>
             <Table
-                playerHand={playerHand}
+                pcGamePoints={pcGamePoints}
+                playerGamePoints={playerGamePoints}
                 setPcGamePoints={setPcGamePoints}
                 setPlayerGamePoints={setPlayerGamePoints}
-                setWinner={setWinner}
-                pcGamePoints={pcGamePoints}
-                playerGamePoints={playerGamePoints}>
+                firtsHand={firtsHand}
+                /* setFirstHand={setFirstHand} */
+                playerHand={playerHand}
+                setWinner={setWinner}>
             </Table>
             <div>
                 <span>Puntos PC: {pcGamePoints}</span>

@@ -1,26 +1,28 @@
-const Modal = ({ move, playerFlower }) => {
-    console.log(playerFlower)
+const Modal = ({ move, playerFlower, isVisible, onClose }) => {
+    /* console.log(isVisible) */
 
-    if (move == 'TRUCO') {
+    /* if (move.action == 'TRUCO') {
         console.log('el move es truco')
     }
 
-    if (move == 'FLOR') {
+    if (move.action == 'FLOR') {
         playerFlower
             ? console.log('ambos tienen flor')
             : console.log('solo la pc tiene flor')
-    }
+    } */
 
     const handleClick = () => {
-        console.log('QUIERO')
+        console.log('handle click')
+        onClose()
     }
 
+    if (!isVisible) return null
 
     return (
         <div className="modalBox">
             <div className="modal">
                 <p>PC dice:</p>
-                <h2>{move}</h2>
+                <h2>{move.action}</h2>
                 {
                     playerFlower
                         ?
@@ -56,12 +58,7 @@ const Modal = ({ move, playerFlower }) => {
                             <button
                                 className="button"
                                 onClick={handleClick}>
-                                QUIERO
-                            </button>
-                            <button
-                                className="button"
-                                onClick={handleClick}>
-                                NO QUIERO
+                                HASTA ACÁ LLEGÓ EL OLOR
                             </button>
                         </div>
                 }

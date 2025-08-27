@@ -16,8 +16,10 @@ const Table = ({
     setWinner,
     pcGamePoints,
     playerGamePoints }) => {
+
     // estado para manejar las manos que se van jugando (NO EL JUGADOR QUE ES MANO)
-    const [hand, setHand] = useState(0)
+    /* const [hand, setHand] = useState(0)  SE REEMPLAZA POR LA CONSTANTE STAGE */
+    const [stage, setStage] = useState(0)
 
     const [pcCards, setPcCards] = useState([])
     const [playerCards, setPlayerCards] = useState([])
@@ -37,7 +39,31 @@ const Table = ({
     // estado para saber el turno del jugador que corresponde (0: PC | 1: jugador)
     const [turn, setTurn] = useState(null)
 
+    // estado para saber si ya se cantó o no --> false = se puede tantear
+    const [points, setPoints] = useState(true)
+
+    // estado para saber la carta que está colocada en su momento
+    const [currentCard, setCurrentCard] = useState({})
+
+    // estado del tablero
+    const [board, setBoard] = useState(
+        Array(2).fill().map(() =>
+            Array(3).fill(null)
+        )
+    )
+
+    // estado que maneja la visibilidad del modal
+    const [modalIsVisible, setModalIsVisible] = useState(false)
+
+    // estado para manejar si mostrar o no el modal de flor de la pc
+    const [isPcFlowerModalVisibe, setIsPcFlowerModalVisible] = useState(false)
+
+    const openModal = () => setModalIsVisible(true)
+    const closeModal = () => setModalIsVisible(false)
+
     useEffect(() => {
+        setTurn(playerHand)
+        /* console.log(turn)
         if (hand === 0) {
             setTurn(playerHand)
         } else if (hand % 2 === 0) {
@@ -46,7 +72,7 @@ const Table = ({
             playerHand === 0
                 ? setTurn(1)
                 : setTurn(0)
-        }
+        } */
 
         const {
             arrayPlayerCards,
@@ -77,24 +103,20 @@ const Table = ({
         console.log(`Puntos PC: ${dataPcPoints}`)
         console.log(`Puntos player: ${dataPlayerPoints}`) */
 
-    }, [playerHand, hand])
+    }, [playerHand, stage])
 
-    // estado para manejar si mostrar o no el modal de flor de la pc
-    const [isPcFlowerModalVisibe, setIsPcFlowerModalVisible] = useState(false)
-    
+    // USE EFFECT PARA VERIFICAR SI LA PC TIENE FLOR Y ASÍ CANTARLA
     useEffect(() => {
-        console.log(turn)
         if (pcFlower === true) {
             setPcGamePoints(pcGamePoints + 3)
 
             setTimeout(() => {
                 setIsPcFlowerModalVisible(true)
-            }, 100)
-            if (turn === 0) {
-            }
+            }, 1000)
+            /* if (turn === 0) {
+            } */
         }
-    }, [pcFlower])
-
+    }, [pcFlower]) // revisar porque acá cuando vuelva a false, se ejecutaría de nuevo el useEffect
 
     /* if (pcFlower) {
         return (
@@ -104,25 +126,13 @@ const Table = ({
         )
     } */
 
-    const callPcModal = (move) => {
+    /* const callPcModal = (move) => {
         console.log('se llamó al modal')
         return (
             <Modal move={move}></Modal>
         )
-    }
+    } */
 
-    // estado para saber si ya se cantó o no --> false = se puede tantear
-    const [points, setPoints] = useState(true)
-
-    // estado para saber la carta que está colocada en su momento
-    const [currentCard, setCurrentCard] = useState({})
-
-    // estado del tablero
-    const [board, setBoard] = useState(
-        Array(2).fill().map(() =>
-            Array(3).fill(null)
-        )
-    )
 
     const updateTable = (card, index) => {
         const newBoard = [...board]
@@ -160,16 +170,30 @@ const Table = ({
         console.log(playerGamePoints)
     }
 
+    const shoutTrick = () => {
+        console.log('El jugador cantó truco')
+        openModal()
+    }
+
     if (playerHand !== null) {
         return (
             <main className='table'>
-                {isPcFlowerModalVisibe && <Modal move={'FLOR'} playerFlower={playerFlower}></Modal>}
+                <Modal
+                    move={{
+                        action: 'FLOR',
+                        player: 'PC'
+                    }}
+                    playerFlower={playerFlower}
+                    isVisible={modalIsVisible}
+                    onClose={closeModal}>
+                </Modal>
                 <h1>TRUCO!</h1>
                 <section className='cardsBox'>
                     {
                         pcCards.map((card, index) => {
                             return (
                                 <Card
+                                    disabled={0}
                                     key={index}
                                     updateTable={updateTable}
                                     card={card}
@@ -188,6 +212,7 @@ const Table = ({
                         playerCards.map((card, index) => {
                             return (
                                 <Card
+                                    disabled={turn}
                                     key={index}
                                     updateTable={updateTable}
                                     card={card}
@@ -200,21 +225,24 @@ const Table = ({
                 </section>
                 <section className='buttons'>
                     <button
+                        disabled={turn}
                         className='button'>
                         ENVIDO
                     </button>
-                    <button 
+                    <button
                         disabled
                         className='button'>
                         REAL ENVIDO
                     </button>
-                    <button 
+                    <button
                         disabled
                         className='button'>
                         FALTA ENVIDO
                     </button>
-                    <button 
-                        className='button'>
+                    <button
+                        disabled={turn}
+                        className='button'
+                        onClick={shoutTrick}>
                         TRUCO
                     </button>
                     <button
@@ -222,13 +250,14 @@ const Table = ({
                         className='button'>
                         RE TRUCO
                     </button>
-                    <button 
+                    <button
                         disabled
                         className='button'>
                         VALE CUATRO
                     </button>
                     <button
-                        /* disabled={!playerFlower} */
+                        disabled={turn}
+                        className='button'
                         onClick={addFlowerPlayerPoints}>
                         FLOR
                     </button>
@@ -250,7 +279,7 @@ const Table = ({
                         FINALIZAR MANO
                     </button>
                 </section>
-            </main>
+            </main >
         )
     } else {
         return (
