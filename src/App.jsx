@@ -1,4 +1,5 @@
-import './index.css'
+/* import './index.css' */
+import '../sass/app.scss'
 
 import Game from './components/Game'
 

@@ -28,7 +28,21 @@ const Game = () => {
     }, [winner])
 
     return (
-        <>
+        <main className="game">
+            <section className="gameControls">
+                <div className="control">
+                    PUNTOS TOTALES: 15
+                </div>
+                <div className="control">
+                    MIS PUNTOS: {playerGamePoints}
+                </div>
+                <div className="control">
+                    PUNTOS PC: {playerGamePoints}
+                </div>
+                <div className="control">
+                    SALIR X
+                </div>
+            </section>
             <Table
                 pcGamePoints={pcGamePoints}
                 playerGamePoints={playerGamePoints}
@@ -39,11 +53,7 @@ const Game = () => {
                 playerHand={playerHand}
                 setWinner={setWinner}>
             </Table>
-            <div>
-                <span>Puntos PC: {pcGamePoints}</span>
-                <span>Puntos jugador: {playerGamePoints}</span>
-            </div>
-        </>
+        </main>
     )
 }
 

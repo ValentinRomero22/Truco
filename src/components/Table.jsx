@@ -177,7 +177,7 @@ const Table = ({
 
     if (playerHand !== null) {
         return (
-            <main className='table'>
+            <section className='table'>
                 <Modal
                     move={{
                         action: 'FLOR',
@@ -279,7 +279,7 @@ const Table = ({
                         FINALIZAR MANO
                     </button>
                 </section>
-            </main >
+            </section >
         )
     } else {
         return (
